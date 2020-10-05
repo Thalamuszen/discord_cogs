@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-from redbot.core import checks, Config
+from redbot.core import bank, checks, Config
 import discord
 from redbot.core import commands
 from redbot.core.data_manager import bundled_data_path
@@ -328,6 +328,7 @@ class Leveler(commands.Cog):
             oldlvl = await self.profiles._get_level(message.author)
             await self.profiles._today_addone(message.author)
             await self.profiles._give_exp(message.author, xp)
+            awaitredbot.core.bank.deposit_credits(message.author, xp)
             await self.profiles._set_user_lastmessage(message.author, timenow)
             lvl = await self.profiles._get_level(message.author)
             if (
