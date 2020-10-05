@@ -328,7 +328,7 @@ class Leveler(commands.Cog):
             oldlvl = await self.profiles._get_level(message.author)
             await self.profiles._today_addone(message.author)
             await self.profiles._give_exp(message.author, xp)
-            awaitredbot.core.bank.deposit_credits(message.author, xp)
+            await redbot.core.bank.deposit_credits(message.author, xp)
             await self.profiles._set_user_lastmessage(message.author, timenow)
             lvl = await self.profiles._get_level(message.author)
             if (
