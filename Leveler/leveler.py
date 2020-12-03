@@ -331,21 +331,21 @@ class Leveler(commands.Cog):
             #Add by me to give credits
             await bank.deposit_credits(message.author, xp)
             #Daily cog input
-            memberdata = await self.bot.get_cog("Daily").config.member(ctx.author).all()
+            memberdata = await self.bot.get_cog("Daily").config.member(message.author).all()
             messages = memberdata["messages"]
             messages_count = memberdata["messages_count"]
             messages_quest = memberdata["messages_quest"]
             messages_credits = memberdata["messages_credits"]
-            credits_name = await bank.get_currency_name(ctx.guild)            
+            credits_name = await bank.get_currency_name(message.guild)            
             #Fishing module quest check/completion
-            await self.bot.get_cog("Daily").config.member(ctx.author).messages_count.set(messages_count + xp)
+            await self.bot.get_cog("Daily").config.member(message.author).messages_count.set(messages_count + xp)
             messages_count = messages_count + 1
             if messages_count == messages_quest:
                 if messages == False:
                     credits = int(messages_credits)
-                    await bank.deposit_credits(ctx.author, credits)
-                    await ctx.send(f"<:Coins:783453482262331393> **| Messages quest complete! Reward:** {messages_credits} {credits_name}")
-                await self.bot.get_cog("Daily").config.member(ctx.author).fishing.set(1)
+                    await bank.deposit_credits(message.author, credits)
+                    await message.send(f"<:Coins:783453482262331393> **| Messages quest complete! Reward:** {messages_credits} {credits_name}")
+                await self.bot.get_cog("Daily").config.member(message.author).fishing.set(1)
             #End
             await self.profiles._set_user_lastmessage(message.author, timenow)
             lvl = await self.profiles._get_level(message.author)
