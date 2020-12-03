@@ -340,7 +340,7 @@ class Leveler(commands.Cog):
             #Leveler module quest check/completion
             await self.bot.get_cog("Daily").config.member(message.author).messages_count.set(messages_count + xp)
             messages_count = messages_count + 1
-            if messages_count >= messages_quest:
+            if messages_count == messages_quest:
                 if messages == False:
                     credits = int(messages_credits)
                     await bank.deposit_credits(message.author, credits)
