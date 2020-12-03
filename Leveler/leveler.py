@@ -337,7 +337,7 @@ class Leveler(commands.Cog):
             messages_quest = memberdata["messages_quest"]
             messages_credits = memberdata["messages_credits"]
             credits_name = await bank.get_currency_name(message.guild)            
-            #Fishing module quest check/completion
+            #Leveler module quest check/completion
             await self.bot.get_cog("Daily").config.member(message.author).messages_count.set(messages_count + xp)
             messages_count = messages_count + 1
             if messages_count == messages_quest:
