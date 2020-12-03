@@ -345,7 +345,7 @@ class Leveler(commands.Cog):
                     credits = int(messages_credits)
                     await bank.deposit_credits(message.author, credits)
                     await message.send(f"<:Coins:783453482262331393> **| Messages quest complete! Reward:** {messages_credits} {credits_name}")
-                await self.bot.get_cog("Daily").config.member(message.author).fishing.set(1)
+                await self.bot.get_cog("Daily").config.member(message.author).messages.set(1)
             #End
             await self.profiles._set_user_lastmessage(message.author, timenow)
             lvl = await self.profiles._get_level(message.author)
