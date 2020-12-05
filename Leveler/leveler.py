@@ -339,8 +339,8 @@ class Leveler(commands.Cog):
             credits_name = await bank.get_currency_name(message.guild)            
             #Leveler module quest check/completion
             await self.bot.get_cog("Daily").config.member(message.author).messages_count.set(messages_count + xp)
-            messages_count = messages_count + 1
-            if messages_count == messages_quest:
+            messages_count = messages_count + xp            
+            if messages_count >= messages_quest:
                 if messages == False:
                     credits = int(messages_credits)
                     await bank.deposit_credits(message.author, credits)
