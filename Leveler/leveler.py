@@ -343,7 +343,7 @@ class Leveler(commands.Cog):
             if messages_count >= messages_quest:
                 if messages_quest == 0:
                     pass
-                else messages == False:
+                elif messages == False:
                     credits = int(messages_credits)
                     await bank.deposit_credits(message.author, credits)
                     await message.channel.send(f"<:Coins:783453482262331393> **| Messages quest complete!**\n<:Coins:783453482262331393> **| Reward:** {messages_credits} {credits_name}")
