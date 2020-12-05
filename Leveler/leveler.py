@@ -330,6 +330,17 @@ class Leveler(commands.Cog):
             await self.profiles._give_exp(message.author, xp)
             #Add by me to give credits
             await bank.deposit_credits(message.author, xp)
+            await self.profiles._set_user_lastmessage(message.author, timenow)
+            lvl = await self.profiles._get_level(message.author)
+            if (
+                lvl == oldlvl + 1
+                and await self.profiles.data.guild(message.guild).lvlup_announce()
+            ):
+                await message.channel.send(
+                    _("{} is now level {} !".format(message.author.mention, lvl))
+                )
+            await self.profiles._check_exp(message.author)
+            await self.profiles._check_role_member(message.author)
             #Daily cog input
             memberdata = await self.bot.get_cog("Daily").config.member(message.author).all()
             messages = memberdata["messages"]
@@ -342,24 +353,13 @@ class Leveler(commands.Cog):
             messages_count = messages_count + xp            
             if messages_count >= messages_quest:
                 if messages_quest == 0:
-                    pass
-                elif messages == False:
+                    return
+                if messages == False:
                     credits = int(messages_credits)
                     await bank.deposit_credits(message.author, credits)
                     await message.channel.send(f"<:Coins:783453482262331393> **| Messages quest complete!**\n<:Coins:783453482262331393> **| Reward:** {messages_credits} {credits_name}")
                 await self.bot.get_cog("Daily").config.member(message.author).messages.set(1)
-            #End
-            await self.profiles._set_user_lastmessage(message.author, timenow)
-            lvl = await self.profiles._get_level(message.author)
-            if (
-                lvl == oldlvl + 1
-                and await self.profiles.data.guild(message.guild).lvlup_announce()
-            ):
-                await message.channel.send(
-                    _("{} is now level {} !".format(message.author.mention, lvl))
-                )
-            await self.profiles._check_exp(message.author)
-            await self.profiles._check_role_member(message.author)
+            #End            
 
     @commands.command()
     @commands.guild_only()
