@@ -7,6 +7,7 @@ from redbot.core.data_manager import bundled_data_path
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
 import asyncio
 import datetime
+from datetime import date, timedelta, timezone  
 from .userprofile import UserProfile
 from PIL import Image, ImageDraw, ImageFont
 from math import floor, ceil
@@ -347,14 +348,23 @@ class Leveler(commands.Cog):
             messages_count = memberdata["messages_count"]
             messages_quest = memberdata["messages_quest"]
             messages_credits = memberdata["messages_credits"]
-            credits_name = await bank.get_currency_name(message.guild)            
+            credits_name = await bank.get_currency_name(message.guild)
+            #Update midnight values
+            today = date.today()
+            midnight_today = datetime.combine(today, datetime.min.time())        
+            midnight_check = datetime.strptime(str(midnight_today), "%Y-%m-%d %H:%M:%S")
+            await self.bot.get_cog("Daily").config.midnight_today.set(str(midnight_check))
+            #Pull when their last quest was built
+            quests_built = datetime.strptime(str(memberdata["quests_built"]), "%Y-%m-%d %H:%M:%S")             
             #Leveler module quest check/completion
             await self.bot.get_cog("Daily").config.member(message.author).messages_count.set(messages_count + xp)
             messages_count = messages_count + xp            
             if messages_count >= messages_quest:
                 if messages_quest == 0:
                     return
-                if messages == False:
+                if quest_built < midnight_check:
+                    pass
+                elif messages == False:
                     credits = int(messages_credits)
                     await bank.deposit_credits(message.author, credits)
                     await message.channel.send(f"<:Coins:783453482262331393> **| Messages quest complete!**\n<:Coins:783453482262331393> **| Reward:** {messages_credits} {credits_name}")
