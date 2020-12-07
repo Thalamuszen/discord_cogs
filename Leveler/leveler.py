@@ -362,7 +362,7 @@ class Leveler(commands.Cog):
             if messages_count >= messages_quest:
                 if messages_quest == 0:
                     return
-                if quest_builts < midnight_check:
+                if quests_built < midnight_check:
                     pass
                 elif messages == False:
                     credits = int(messages_credits)
