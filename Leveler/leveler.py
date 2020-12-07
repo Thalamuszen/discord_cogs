@@ -355,7 +355,7 @@ class Leveler(commands.Cog):
             midnight_check = datetime.datetime.strptime(str(midnight_today), "%Y-%m-%d %H:%M:%S")
             await self.bot.get_cog("Daily").config.midnight_today.set(str(midnight_check))
             #Pull when their last quest was built
-            quests_built = datetime.strptime(str(memberdata["quests_built"]), "%Y-%m-%d %H:%M:%S")             
+            quests_built = datetime.datetime.strptime(str(memberdata["quests_built"]), "%Y-%m-%d %H:%M:%S")             
             #Leveler module quest check/completion
             await self.bot.get_cog("Daily").config.member(message.author).messages_count.set(messages_count + xp)
             messages_count = messages_count + xp            
