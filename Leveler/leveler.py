@@ -351,8 +351,8 @@ class Leveler(commands.Cog):
             credits_name = await bank.get_currency_name(message.guild)
             #Update midnight values
             today = date.today()
-            midnight_today = datetime.combine(today, datetime.min.time())        
-            midnight_check = datetime.strptime(str(midnight_today), "%Y-%m-%d %H:%M:%S")
+            midnight_today = datetime.datetime.combine(today, datetime.datetime.min.time())        
+            midnight_check = datetime.datetime.strptime(str(midnight_today), "%Y-%m-%d %H:%M:%S")
             await self.bot.get_cog("Daily").config.midnight_today.set(str(midnight_check))
             #Pull when their last quest was built
             quests_built = datetime.strptime(str(memberdata["quests_built"]), "%Y-%m-%d %H:%M:%S")             
